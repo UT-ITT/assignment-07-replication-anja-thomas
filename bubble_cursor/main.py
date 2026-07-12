@@ -1,51 +1,59 @@
+"""
+The Bubble Cursor -- pyglet replica of:
+
+  Grossman, T. and Balakrishnan, R. (2005). The Bubble Cursor: Enhancing
+  Target Acquisition by Dynamic Resizing of the Cursor's Activation Area.
+  ACM CHI 2005.
+
+Run with:  python main.py
+
+From the menu, choose a Mode (Demo / Experiment 1 / Experiment 2) and a
+Cursor (Point / Bubble / Object Pointing), then click Start.
+Press Esc at any time to go back to the menu.
+"""
+
 import pyglet
-from pyglet.window import key  # Added this import for key detection
 
-from config import *
-from scenes.scene_manager import SceneManager
-from scenes.menu_scene import MenuScene
+import config
+from app import App
 
-class BubbleCursorApp(pyglet.window.Window):
+window = pyglet.window.Window(
+    config.WINDOW_WIDTH, config.WINDOW_HEIGHT,
+    caption="The Bubble Cursor -- CHI 2005 replica")
 
-    def __init__(self):
-        super().__init__(
-            width=WINDOW_WIDTH,
-            height=WINDOW_HEIGHT,
-            caption=WINDOW_TITLE
-        )
+pyglet.gl.glClearColor(*(c / 255 for c in config.BG_COLOR))
 
-        self.manager = SceneManager()
-        menu = MenuScene(self, self.manager)
-        self.manager.change_scene(menu)
-
-        pyglet.clock.schedule_interval(
-            self.update,
-            1 / FPS
-        )
-
-    def update(self, dt):
-        self.manager.update(dt)
-
-    def on_draw(self):
-        self.manager.draw()
-
-    def on_key_press(self, symbol, modifiers):
-        # 1. Intercept 'Q' globally right here at the window level!
-        if symbol == key.Q:
-            print("Q pressed. Exiting application...")
-            pyglet.app.exit()
-            return True
-            
-        # 2. If it's not 'Q', pass it along to your scenes like normal
-        self.manager.on_key_press(symbol, modifiers)
-
-    def on_mouse_motion(self, x, y, dx, dy):
-        self.manager.on_mouse_motion(x, y, dx, dy)
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        self.manager.on_mouse_press(x, y, button, modifiers)
+app = App(window)
 
 
-if __name__ == "__main__":
-    app = BubbleCursorApp()
-    pyglet.app.run()
+@window.event
+def on_mouse_motion(x, y, dx, dy):
+    app.on_mouse_motion(x, y, dx, dy)
+
+
+@window.event
+def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
+    app.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
+
+
+@window.event
+def on_mouse_press(x, y, button, modifiers):
+    app.on_mouse_press(x, y, button, modifiers)
+
+
+@window.event
+def on_key_press(symbol, modifiers):
+    app.on_key_press(symbol, modifiers)
+
+
+@window.event
+def on_draw():
+    app.draw()
+
+
+def update(dt):
+    app.update(dt)
+
+
+pyglet.clock.schedule_interval(update, 1.0 / config.FPS)
+pyglet.app.run()
