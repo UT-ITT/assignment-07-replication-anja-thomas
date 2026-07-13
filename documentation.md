@@ -66,6 +66,8 @@ Computer 2021 (MuC '21)*, September 5–8, 2021, Ingolstadt, Germany. ACM.
 
 ## 2. Implementation Summary
 
+
+We used simple pyglet for the project as we used that for most of the projects in this lecture.
 We implemented three cursor techniques and a demo/experiment frame around them:
 
 - **Point cursor** — standard single-pixel hotspot, selects whichever target's circle
