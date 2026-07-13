@@ -43,7 +43,7 @@ infrastructure.
   tracking, pen input, or a trained model, the bubble cursor only needs mouse position
   and a set of circular targets, which fits comfortably in a two-week scope. 
   It was important for us to not needany extra hardware.
-- **Interesting theory.** Fits Law was an interesting theoretical basis and we like voronoi diagrams.
+- **Interesting theory.** Fitts Law was an interesting theoretical basis and we like voronoi diagrams.
 - **Scope is appropriately sized.** Implementing the three cursors plus a lightweight
   replication frame for Experiment 1 (1D reciprocal pointing) and Experiment 2
   (2D pointing with distractor density) is substantial but bounded — we deliberately
