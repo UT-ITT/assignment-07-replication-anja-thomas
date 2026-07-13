@@ -1,7 +1,9 @@
 import random
 
+import numpy as np
 import pyglet
 from pyglet.window import key
+from scipy.spatial import Voronoi
 
 import config
 import geometry
@@ -27,6 +29,8 @@ class DemoMode:
         self.batch = pyglet.graphics.Batch()
         self.targets = []
         self.target_shapes = []  # (fill_circle, ring_arc) per target, persistent
+        self.show_voronoi = False
+        self.voronoi_lines = []
 
         self._build_header()
         self._make_layout()
@@ -44,7 +48,8 @@ class DemoMode:
             "", x=20, y=config.WINDOW_HEIGHT - 64, font_size=14,
             color=config.COLOR_TEXT, batch=self.batch)
         self.hint_label = pyglet.text.Label(
-            "1: Point   2: Bubble   3: Object Pointing   |   R: new layout   |   Esc: menu",
+            "1: Point   2: Bubble   3: Object Pointing   |   R: new layout   |   "
+            "T: Voronoi   |   Q: menu",
             x=20, y=18, font_size=12, color=config.COLOR_SUBTEXT, batch=self.batch)
 
     def _make_layout(self):
@@ -79,6 +84,48 @@ class DemoMode:
                                          batch=self.batch)
             fill.opacity = 0  # hidden until captured
             self.target_shapes.append((fill, ring))
+
+        self._build_voronoi()
+
+    def _build_voronoi(self):
+        """Compute the Voronoi diagram over target centers and store it as
+        persistent Line shapes in the batch (visibility toggled via opacity)."""
+        for line in self.voronoi_lines:
+            line.delete()
+        self.voronoi_lines = []
+
+        if len(self.targets) < 4:
+            return
+
+        color = getattr(config, "COLOR_VORONOI", (120, 200, 255))
+        opacity = 130 if self.show_voronoi else 0
+
+        pts = np.array([t.pos for t in self.targets])
+        vor = Voronoi(pts)
+        center = pts.mean(axis=0)
+        far = max(config.WINDOW_WIDTH, config.WINDOW_HEIGHT) * 2
+
+        for (p1, p2), (v1, v2) in zip(vor.ridge_points, vor.ridge_vertices):
+            if v1 >= 0 and v2 >= 0:
+                x1, y1 = vor.vertices[v1]
+                x2, y2 = vor.vertices[v2]
+            else:
+                # One end of the ridge is at infinity: extend it far enough
+                # that the window edge clips it naturally.
+                v_known = v1 if v1 >= 0 else v2
+                x1, y1 = vor.vertices[v_known]
+                tangent = pts[p2] - pts[p1]
+                tangent = tangent / np.linalg.norm(tangent)
+                normal = np.array([-tangent[1], tangent[0]])
+                midpoint = pts[[p1, p2]].mean(axis=0)
+                if np.dot(midpoint - center, normal) < 0:
+                    normal = -normal
+                x2, y2 = np.array([x1, y1]) + normal * far
+
+            line = pyglet.shapes.Line(x1, y1, x2, y2, thickness=1.5,
+                                       color=color, batch=self.batch)
+            line.opacity = opacity
+            self.voronoi_lines.append(line)
 
     def _build_cursor_shapes(self):
         self.bubble_shape = pyglet.shapes.Circle(
@@ -117,6 +164,11 @@ class DemoMode:
             self._make_layout()
             if hasattr(self.cursor, "reset"):
                 self.cursor.reset(self.targets, start_pos=(self.mouse_x, self.mouse_y))
+        elif symbol == key.T:
+            self.show_voronoi = not self.show_voronoi
+            opacity = 130 if self.show_voronoi else 0
+            for line in self.voronoi_lines:
+                line.opacity = opacity
 
     # --------------------------------------------------------------- loop
     def update(self, dt):

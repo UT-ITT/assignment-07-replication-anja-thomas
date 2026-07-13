@@ -9,7 +9,7 @@ Run with:  python main.py
 
 From the menu, choose a Mode (Demo / Experiment 1 / Experiment 2) and a
 Cursor (Point / Bubble / Object Pointing), then click Start.
-Press Esc at any time to go back to the menu.
+Press Q at any time to go back to the menu.
 """
 
 import pyglet

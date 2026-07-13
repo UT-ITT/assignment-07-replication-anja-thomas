@@ -40,7 +40,7 @@ class App:
         self.mode.on_mouse_press(x, y, button, modifiers)
 
     def on_key_press(self, symbol, modifiers):
-        if symbol == pyglet.window.key.ESCAPE:
+        if symbol == pyglet.window.key.Q:
             if not isinstance(self.mode, MenuMode):
                 self.return_to_menu()
                 return

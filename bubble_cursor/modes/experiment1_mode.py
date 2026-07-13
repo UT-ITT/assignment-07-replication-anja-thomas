@@ -95,7 +95,7 @@ class Experiment1Mode:
             "", x=20, y=config.WINDOW_HEIGHT - 86, font_size=13,
             color=config.COLOR_SUBTEXT, batch=self.batch)
         self.hint_label = pyglet.text.Label(
-            "Click the GREEN target, back and forth   |   Esc: menu",
+            "Click the GREEN target, back and forth   |   Q: menu",
             x=20, y=18, font_size=12, color=config.COLOR_SUBTEXT, batch=self.batch)
         self.result_label = pyglet.text.Label(
             "", x=config.WINDOW_WIDTH / 2, y=config.WINDOW_HEIGHT / 2,
@@ -225,7 +225,7 @@ class Experiment1Mode:
         if self.results_path:
             lines.append(f"Saved to: {self.results_path}")
         lines.append("")
-        lines.append("Press Esc to return to the menu.")
+        lines.append("Press Q to return to the menu.")
         self.result_label.text = "\n".join(lines)
         for (_, fill, ring) in self.target_shapes:
             fill.delete()

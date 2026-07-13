@@ -82,7 +82,7 @@ class MenuMode:
         self._all_buttons.append(self.start_button)
 
         self.hint_label = pyglet.text.Label(
-            "Esc returns to this menu from any mode",
+            "Q returns to this menu from any mode",
             x=W / 2, y=30, anchor_x="center", font_size=12,
             color=config.COLOR_SUBTEXT, batch=self.batch)
 

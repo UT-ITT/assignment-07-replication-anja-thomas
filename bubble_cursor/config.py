@@ -29,6 +29,7 @@ COLOR_POINT_CROSS = (20, 20, 25)
 COLOR_TEXT = (30, 30, 35, 255)
 COLOR_SUBTEXT = (95, 95, 100, 255)
 COLOR_START_CIRCLE = (210, 60, 55)
+COLOR_VORONOI = (0, 0, 0)
 
 # Number of blocks of trials. The paper used 9 (exp1) / 4 (exp2) blocks for
 # statistically robust, publishable data. For a hands-on personal replica
