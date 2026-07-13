@@ -10,11 +10,9 @@
 
 ### Candidates considered
 
-**The Bubble Cursor: Enhancing Target Acquisition by Dynamic Resizing of the Cursor's Activation Area**
-Tovi Grossman, Ravin Balakrishnan. CHI 2005. 
+Grossman, T., & Balakrishnan, R. (2005). The Bubble Cursor: Enhancing Target Acquisition by Dynamic Resizing of the Cursor's Activation Area. In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI '05) (pp. 281–290). ACM.
 
-**ScreenshotMatcher: Taking Smartphone Photos to Capture Screenshots**
-Schmid, Fischer, Weichart, Hartmann, Wimmer. Mensch und Computer 2021. 
+Schmid, M., Fischer, A., Weichart, D., Hartmann, B., & Wimmer, R. (2021). ScreenshotMatcher: Taking Smartphone Photos to Capture Screenshots. In Mensch und Computer 2021. ACM.
 
 ScreenshotMatcher lets a user photograph a PC screen with a smartphone camera; a
 desktop companion app matches the photo against a live screenshot via ORB keypoint
