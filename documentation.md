@@ -29,6 +29,7 @@ it needs no cross-device networking layer (WiFi discovery, HTTP transfer, Androi
 app) and no computer-vision pipeline, only mouse input and 2D geometry, which let us
 focus more implementation time on the interaction logic itself rather than
 infrastructure.
+Idea of the bubble cursor: Dynamicly increase cursor size depending on nearest targets. 
 
 ### Why we chose the Bubble Cursor
 
