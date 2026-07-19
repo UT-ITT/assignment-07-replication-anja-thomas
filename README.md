@@ -7,4 +7,4 @@ So this is the last time for this lecture. We put every exercise-related informa
 It was a fun course <3
 
 Best,
-Anya & Thomas
+Anja & Thomas
